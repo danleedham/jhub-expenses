@@ -1,0 +1,12 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="expenses/tabs/manage"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ expense?.title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-button margin color="primary" [routerLink] = "['/','expenses','tabs','manage','edit',expense?.id]">Edit</ion-button>
+</ion-content>

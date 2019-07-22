@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref='/expenses/tabs/manage'></ion-back-button>
+    </ion-buttons>
+    <ion-title>New Expense</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onSubmitNewExpense()" [disabled]="!form.valid">
+        <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="form">
+    <ion-item size-sm="6" lines="none" hidden>
+      <ion-label>Expense ID: </ion-label>
+      <ion-input type="number" formControlName="id" disabled></ion-input>
+    </ion-item>
+    <ion-item size-sm="6" offset-sm="3">
+      <ion-label position="floating">Title</ion-label>
+      <ion-input type="text" autocomplete autocorrect formControlName="title"></ion-input>
+    </ion-item>
+    <ion-item size-sm="6" offset-sm="3">
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea rows="3" formControlName="description"></ion-textarea>
+    </ion-item>
+    <ion-item size-sm="6" offset-sm="3">
+      <ion-label position="floating">Amount</ion-label>
+      <ion-input required type="number" value="" formControlName="price"></ion-input>
+    </ion-item>
+    <ion-item size-sm="6" offset-sm="3" *ngIf="!form.get('price').valid && form.get('price').touched">
+      <p color="danger">Amount must be larger than £0.00</p>
+    </ion-item>
+    <ion-item size-sm="6" offset-sm="3">
+      <ion-label position="floating">Category</ion-label>
+      <ion-select interface="popover" placeholder="" formControlName="category" okText="Okay"
+        cancelText="Dismiss">
+        <!-- <ion-select-option *ngFor="let user of users">{{user.first + ' ' + user.last}}</ion-select-option> -->
+        <ion-select-option value="Subsistence">Subsistence</ion-select-option>
+        <ion-select-option value="Daily Food Charge">Daily Food Charge</ion-select-option>
+        <ion-select-option value="Lodging Allowance">Lodging Allowance</ion-select-option>
+        <ion-select-option value="Meals Out Expenses">Meals Out Expenses</ion-select-option>
+        <ion-select-option value="Food and Incidentals Allowance">Food and Incidentals Allowance</ion-select-option>
+        <ion-select-option value="Special Messing Allowance">Special Messing Allowance</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item size-sm="6" offset-sm="3">
+      <ion-label position="floating">Date & Time</ion-label>
+      <ion-datetime displayFormat="DD/MM/YY H:mm" minuteValues="0,15,30,45" min="1918-04-01" 
+        formControlName="date" [(ngModel)]="myDate">
+      </ion-datetime>
+    </ion-item>
+      <app-image-picker padding (imagePick)="onImagePicked($event)"></app-image-picker>
+      <ion-button padding size-sm="6" offset-sm="3" color="primary" (click)="onSubmitNewExpense()" expand="block" [disabled]="!form.valid">Add Expense</ion-button>
+      <ion-input formControlName="imageData" type="hidden"></ion-input>
+    </form>
+</ion-content>

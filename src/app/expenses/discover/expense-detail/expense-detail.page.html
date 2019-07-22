@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref='/expenses/tabs/discover/'></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ expense?.title }} Info</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button routerLink="/expenses/tabs/discover">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item lines="none">
+    <ion-img [src]="expense?.imageData"></ion-img>
+  </ion-item>
+  <ion-item lines="none">
+    <ion-label>Amount</ion-label>
+    <p>{{ expense?.price | currency: "GBP"}}</p>
+  </ion-item>
+  <ion-item lines="none">
+    <ion-label>Description</ion-label>
+    <p>{{ expense?.description }}</p>
+  </ion-item>
+  <ion-item lines="none">
+    <ion-label>Category</ion-label>
+    {{ expense?.category }}
+  </ion-item>
+  <ion-item lines="none">
+    <ion-label>Date</ion-label>
+    {{ expense?.dateTime | date: "short" }}
+  </ion-item>
+  <ion-item lines="none">
+    <ion-label>Claimed For?</ion-label>
+    <ion-icon name="checkmark-circle" *ngIf="expense?.claimedFor"></ion-icon>
+    <ion-icon name="close-circle" *ngIf="!expense?.claimedFor"></ion-icon>
+  </ion-item>
+  <ion-button color="primary" margin (click)="onShowRules()">What are the rules?</ion-button>
+  <ion-button hidden color="primary" [routerLink]="'/expenses/tabs/manage/edit/'+ expense?.id">Edit Expense</ion-button>
+</ion-content>
