@@ -11,6 +11,7 @@ import { SegmentChangeEventDetail } from "@ionic/core";
 export class DiscoverPage implements OnInit {
   loadedExpenses: Expense[];
   relevantExpenses: Expense[];
+  displayExpensesAmount = 0;
   private expensesSub: Subscription;
 
   constructor(private expensesService: ExpensesService) {}
@@ -19,23 +20,34 @@ export class DiscoverPage implements OnInit {
     this.expensesSub = this.expensesService.expenses.subscribe(expenses => {
       this.loadedExpenses = expenses;
       this.relevantExpenses = expenses;
-      console.log(this.relevantExpenses);
     });
   }
 
-  ionViewDidEnter() {
-    // console.log(this.loadedExpenses);
+  ionViewWillEnter() {
+    this.expensesService.fetchExpenses();
+    this.relevantExpenses.forEach(element => {
+      this.displayExpensesAmount += element.price;
+    });
   }
 
   onFilterUpdate(event: CustomEvent<SegmentChangeEventDetail>) {
     if (event.detail.value === "all") {
       this.relevantExpenses = this.loadedExpenses;
-    } else {
+      this.displayExpensesAmount = 0;
+      this.relevantExpenses.forEach(element => {
+        this.displayExpensesAmount += element.price;
+      });
+    
+        } else {
       this.relevantExpenses = this.loadedExpenses.filter(
         expense => expense.claimedFor !== true
       );
+      this.displayExpensesAmount = 0;
+      this.relevantExpenses.forEach(element => {
+        this.displayExpensesAmount += element.price;
+      });
     }
-    console.log(event.detail);
+    // console.log(event.detail);
   }
 
   ngOnDestroy() {

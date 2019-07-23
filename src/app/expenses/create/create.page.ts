@@ -26,6 +26,10 @@ export class CreatePage implements OnInit, OnDestroy {
     });
   }
 
+    ionViewWillEnter(){
+     this.expensesService.fetchExpenses();
+    }
+    
   onEdit(expenseId: string, slidingItem: IonItemSliding) {
     slidingItem.close();
     this.router.navigate([

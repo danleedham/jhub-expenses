@@ -6,8 +6,8 @@
     </ion-buttons>
     <ion-title>Edit {{ expense?.title }}</ion-title>
     <ion-buttons slot="primary">
-      <ion-button (click)="onSubmitEditExpense()">
-        <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+      <ion-button (click)="onSubmitShowDelete(expense?.id)">
+        <ion-icon name="trash" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -47,7 +47,7 @@
       <ion-item size-sm="6" offset-sm="3">
         <ion-label position="floating">Date & Time</ion-label>
         <ion-datetime displayFormat="DD/MM/YY H:mm" minuteValues="0,15,30,45" min="1918-04-01" ngModel name="date"
-          [value]="expense?.dateTime.toISOString()">
+          [value]="expense?.dateTime">
         </ion-datetime>
       </ion-item>
       <ion-item size-sm="6" offset-sm="3">

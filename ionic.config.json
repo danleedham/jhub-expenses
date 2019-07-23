@@ -1,7 +1,8 @@
 {
   "name": "expenses",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular"
 }

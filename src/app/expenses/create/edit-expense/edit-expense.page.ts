@@ -5,6 +5,7 @@ import { Component, OnInit, ViewChild, OnDestroy } from "@angular/core";
 import { ExpensesService } from "../../expenses.service";
 import { Expense } from "../../expense.model";
 import { Subscription } from "rxjs";
+import { AlertController } from "@ionic/angular";
 
 @Component({
   selector: "app-edit-expense",
@@ -20,7 +21,8 @@ export class EditExpensePage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private expensesService: ExpensesService,
     private navCtrl: NavController,
-    private router: Router
+    private router: Router,
+    private alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -36,6 +38,32 @@ export class EditExpensePage implements OnInit, OnDestroy {
           console.log(this.expense);
         });
     });
+  }
+
+  onSubmitDeleteExpense(expenseId) {
+    localStorage.removeItem(expenseId);
+    this.navCtrl.navigateBack("/expenses/tabs/manage");
+  }
+
+  onSubmitShowDelete(expenseId) {
+    this.alertController
+      .create({
+        header: "Sure you want to delete this?",
+        message: "You'll loose the data and the image",
+        buttons: [
+          { text: "Cancel", role: "cancel" },
+          {
+            text: "Agree",
+            handler: () => {
+              this.onSubmitDeleteExpense(expenseId);
+              console.log("Deleting Expense: ",expenseId)
+            }
+          }
+        ]
+      })
+      .then(alert => {
+        alert.present();
+      });
   }
 
   onSubmitEditExpense() {

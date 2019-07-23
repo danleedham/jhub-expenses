@@ -56,6 +56,7 @@ export class ExpensesService {
         );
       }
     }
+    this._expenses.next(expenses);
   }
 
   getExpense(id: string) {
@@ -119,6 +120,17 @@ export class ExpensesService {
           oldExpense.dateTime
         );
         this._expenses.next(updatedExpenses);
+        // Now Update to Local Storage
+        let toSave = [
+          oldExpense.id,
+          title,
+          description,
+          category,
+          oldExpense.imageData,
+          price,
+          claimedFor,
+          oldExpense.dateTime];
+        localStorage.setItem(oldExpense.id, JSON.stringify(toSave));
         console.log("Updating " + oldExpense.id + " with new data");
       })
     );
